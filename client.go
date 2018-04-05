@@ -22,7 +22,7 @@ type Client struct {
 
 func NewClient(secret, key, passphrase string) *Client {
 	client := Client{
-		BaseURL:    "https://api.exchange.coinbase.com",
+		BaseURL:    "https://api.gdax.com",
 		Secret:     secret,
 		Key:        key,
 		Passphrase: passphrase,
@@ -46,6 +46,8 @@ func (c *Client) Request(method string, url string,
 	}
 
 	fullURL := fmt.Sprintf("%s%s", c.BaseURL, url)
+
+	fmt.Printf("fullURL: %v\n", fullURL)
 	req, err := http.NewRequest(method, fullURL, body)
 	if err != nil {
 		return res, err
@@ -87,6 +89,11 @@ func (c *Client) Request(method string, url string,
 	defer res.Body.Close()
 
 	if res.StatusCode != 200 {
+
+		buf := new(bytes.Buffer)
+		buf.ReadFrom(res.Body)
+		s := buf.String() 		
+		println ("body:" + s)
 		defer res.Body.Close()
 		coinbaseError := Error{}
 		decoder := json.NewDecoder(res.Body)

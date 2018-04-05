@@ -225,6 +225,8 @@ func (c *Client) GetHistoricRates(product string,
 		requestURL = fmt.Sprintf("%s?%s", requestURL, values.Encode())
 	}
 
+	fmt.Printf("url: %v\n", requestURL)
+
 	_, err := c.Request("GET", requestURL, nil, &historicRates)
 	return historicRates, err
 }
