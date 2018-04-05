@@ -131,32 +131,32 @@ func (e *HistoricRate) UnmarshalJSON(data []byte) error {
 
 	timeFloat, ok := entry[0].(float64)
 	if !ok {
-		return errors.New(fmt.SPrintf("Expected float for time, body: %v", string(data)))
+		return errors.New(fmt.Sprintf("Expected float for time, body: %v", string(data)))
 	}
 
 	lowFloat, ok := entry[1].(float64)
 	if !ok {
-		return errors.New(fmt.SPrintf("Expected float for low, body: %v", string(data)))
+		return errors.New(fmt.Sprintf("Expected float for low, body: %v", string(data)))
 	}
 
 	highFloat, ok := entry[2].(float64)
 	if !ok {
-		return errors.New(fmt.SPrintf("Expected float for high, body: %v", string(data)))
+		return errors.New(fmt.Sprintf("Expected float for high, body: %v", string(data)))
 	}
 
 	openFloat, ok := entry[3].(float64)
 	if !ok {
-		return errors.New(fmt.SPrintf("Expected float for open, body: %v", string(data)))
+		return errors.New(fmt.Sprintf("Expected float for open, body: %v", string(data)))
 	}
 
 	closeFloat, ok := entry[4].(float64)
 	if !ok {
-		return errors.New(fmt.SPrintf("Expected float for close, body: %v", string(data)))
+		return errors.New(fmt.Sprintf("Expected float for close, body: %v", string(data)))
 	}
 
 	volumeFloat, ok := entry[5].(float64)
 	if !ok {
-		return errors.New(fmt.SPrintf("Expected float for volume, body: %v", string(data)))
+		return errors.New(fmt.Sprintf("Expected float for volume, body: %v", string(data)))
 	}
 
 	*e = HistoricRate{
