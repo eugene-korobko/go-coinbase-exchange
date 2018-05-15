@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strconv"
 	"time"
+	"math"
 )
 
 type Product struct {
@@ -136,7 +137,9 @@ func (e *HistoricRate) UnmarshalJSON(data []byte) error {
 
 	closeFloat, ok := entry[4].(float64)
 	if !ok {
-		return errors.New(fmt.Sprintf("Expected float for close, body: %v", string(data)))
+		// we must skip 
+		// return errors.New(fmt.Sprintf("Expected float for close, body: %v", string(data)))
+		closeFloat = math.NaN()
 	}
 
 	lowFloat, ok := entry[1].(float64)
@@ -229,7 +232,13 @@ func (c *Client) GetHistoricRates(product string,
 	fmt.Printf("url: %v\n", requestURL)
 
 	_, err := c.Request("GET", requestURL, nil, &historicRates)
-	return historicRates, err
+	res := make([]HistoricRate, 0)
+	for _, r := range(historicRates) {
+		if !math.IsNaN(r.Close) {
+			res = append(res, r)
+		}
+	}
+	return res, err
 }
 
 func (c *Client) GetStats(product string) (Stats, error) {
